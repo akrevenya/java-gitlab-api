@@ -18,6 +18,24 @@
         <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
         <maven-source-plugin.version>2.4</maven-source-plugin.version>
     </properties>
+    <developers>
+        <developer>
+            <id>gabriel.allaigre@synaptix-labs.com</id>
+            <name>Gabriel Allaigre</name>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api</url>
+        <connection>scm:git:https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api.git</connection>
+    </scm>
+    <ciManagement>
+        <system>gitlab-ci</system>
+        <url>https://gitlab.synaptix-labs.com/ci/projects/11</url>
+    </ciManagement>
+    <issueManagement>
+        <system>gitlab</system>
+        <url>https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api/issues</url>
+    </issueManagement>
     <build>
         <plugins>
             <plugin>
