@@ -28,7 +28,7 @@ import java.util.zip.GZIPInputStream;
  *
  * @author &#064;timols (Tim O)
  */
-public class GitLab2HTTPRequestor {
+public class GitLabHTTPRequestor {
 
     private static final Pattern PAGE_PATTERN = Pattern.compile("([&|?])page=(\\d+)");
 
@@ -59,7 +59,7 @@ public class GitLab2HTTPRequestor {
         }
     }
 
-    public GitLab2HTTPRequestor(GitLabAPI root) {
+    public GitLabHTTPRequestor(GitLabAPI root) {
         this.root = root;
     }
 
@@ -72,7 +72,7 @@ public class GitLab2HTTPRequestor {
      * @param method The authentication method
      * @return this
      */
-    public GitLab2HTTPRequestor authenticate(String token, TokenType type, AuthMethod method) {
+    public GitLabHTTPRequestor authenticate(String token, TokenType type, AuthMethod method) {
         this.apiToken = token;
         this.tokenType = type;
         this.authMethod = method;
@@ -86,7 +86,7 @@ public class GitLab2HTTPRequestor {
      * @param method The HTTP method
      * @return this
      */
-    public GitLab2HTTPRequestor method(String method) {
+    public GitLabHTTPRequestor method(String method) {
         try {
             this.method = METHOD.valueOf(method).toString();
         } catch (IllegalArgumentException e) {
@@ -104,7 +104,7 @@ public class GitLab2HTTPRequestor {
      * @param value Form parameter Value
      * @return this
      */
-    public GitLab2HTTPRequestor with(String key, Object value) {
+    public GitLabHTTPRequestor with(String key, Object value) {
         if (value != null && key != null) {
             data.put(key, value);
         }
@@ -329,7 +329,7 @@ public class GitLab2HTTPRequestor {
                 return null;
             }
         } catch (SSLHandshakeException e) {
-            throw new SSLHandshakeException("You can disable certificate checking by setting ignoreCertificateErrors on GitLab2HTTPRequestor. SSL Error: " + e.getMessage());
+            throw new SSLHandshakeException("You can disable certificate checking by setting ignoreCertificateErrors on GitLabHTTPRequestor. SSL Error: " + e.getMessage());
         } finally {
             IOUtils.closeQuietly(reader);
         }

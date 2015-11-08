@@ -2,7 +2,7 @@ package com.synaptix.gitlab.api;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synaptix.gitlab.api.http.GitLab2HTTPRequestor;
+import com.synaptix.gitlab.api.http.GitLabHTTPRequestor;
 import com.synaptix.gitlab.api.services.GitLabAPICommits;
 
 import java.io.IOException;
@@ -57,12 +57,12 @@ public class GitLabAPI {
         return this;
     }
 
-    public GitLab2HTTPRequestor retrieve() {
-        return new GitLab2HTTPRequestor(this).authenticate(apiToken, tokenType, authMethod);
+    public GitLabHTTPRequestor retrieve() {
+        return new GitLabHTTPRequestor(this).authenticate(apiToken, tokenType, authMethod);
     }
 
-    public GitLab2HTTPRequestor dispatch() {
-        return new GitLab2HTTPRequestor(this).authenticate(apiToken, tokenType, authMethod).method("POST");
+    public GitLabHTTPRequestor dispatch() {
+        return new GitLabHTTPRequestor(this).authenticate(apiToken, tokenType, authMethod).method("POST");
     }
 
     public boolean isIgnoreCertificateErrors() {
