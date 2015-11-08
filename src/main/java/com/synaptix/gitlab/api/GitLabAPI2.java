@@ -4,20 +4,24 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synaptix.gitlab.api.http.GitlabHTTPRequestor;
 import com.synaptix.gitlab.api.models.GitlabCommitComments;
+import com.synaptix.gitlab.api.models.GitlabCommitDiff;
 import com.synaptix.gitlab.api.models.GitlabCommitStatus;
+import com.synaptix.gitlab.api.models.GitlabProject;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Gitlab API Wrapper class
  *
  * @author &#064;timols (Tim O)
  */
-public class GitlabAPI {
+public class GitLabAPI2 {
 
     public static final ObjectMapper MAPPER = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -30,26 +34,26 @@ public class GitlabAPI {
     private AuthMethod authMethod;
     private boolean ignoreCertificateErrors = false;
 
-    private GitlabAPI(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
+    private GitLabAPI2(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
         this.hostUrl = hostUrl.endsWith("/") ? hostUrl.replaceAll("/$", "") : hostUrl;
         this.apiToken = apiToken;
         this.tokenType = tokenType;
         this.authMethod = method;
     }
 
-    public static GitlabAPI connect(String hostUrl, String apiToken) {
-        return new GitlabAPI(hostUrl, apiToken, TokenType.PRIVATE_TOKEN, AuthMethod.HEADER);
+    public static GitLabAPI2 connect(String hostUrl, String apiToken) {
+        return new GitLabAPI2(hostUrl, apiToken, TokenType.PRIVATE_TOKEN, AuthMethod.HEADER);
     }
 
-    public static GitlabAPI connect(String hostUrl, String apiToken, TokenType tokenType) {
-        return new GitlabAPI(hostUrl, apiToken, tokenType, AuthMethod.HEADER);
+    public static GitLabAPI2 connect(String hostUrl, String apiToken, TokenType tokenType) {
+        return new GitLabAPI2(hostUrl, apiToken, tokenType, AuthMethod.HEADER);
     }
 
-    public static GitlabAPI connect(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
-        return new GitlabAPI(hostUrl, apiToken, tokenType, method);
+    public static GitLabAPI2 connect(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
+        return new GitLabAPI2(hostUrl, apiToken, tokenType, method);
     }
 
-    public GitlabAPI ignoreCertificateErrors(boolean ignoreCertificateErrors) {
+    public GitLabAPI2 ignoreCertificateErrors(boolean ignoreCertificateErrors) {
         this.ignoreCertificateErrors = ignoreCertificateErrors;
         return this;
     }
@@ -79,6 +83,25 @@ public class GitlabAPI {
         }
 
         return new URL(hostUrl + tailAPIUrl);
+    }
+
+    // List commit diffs for a project ID and commit hash
+    // GET /projects/:id/repository/commits/:sha/diff
+
+    /**
+     * Get the diff of a commit
+     * <p>
+     * GET /projects/:id/repository/commits/:sha/diff
+     *
+     * @param projectId  (required) - The ID of a project
+     * @param commitHash (required) - The commit SHA
+     * @return
+     * @throws IOException
+     */
+    public List<GitlabCommitDiff> getCommitDiffs(Serializable projectId, String commitHash) throws IOException {
+        String tailUrl = GitlabProject.URL + "/" + sanitizeProjectId(projectId) + "/repository/commits/" + commitHash + GitlabCommitDiff.URL;
+        GitlabCommitDiff[] diffs = retrieve().to(tailUrl, GitlabCommitDiff[].class);
+        return Arrays.asList(diffs);
     }
 
     /**
