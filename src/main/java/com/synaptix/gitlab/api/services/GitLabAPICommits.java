@@ -1,10 +1,10 @@
 package com.synaptix.gitlab.api.services;
 
 import com.synaptix.gitlab.api.GitLabAPI;
-import com.synaptix.gitlab.api.models.commits.GitlabCommit2;
-import com.synaptix.gitlab.api.models.commits.GitlabCommitComments2;
-import com.synaptix.gitlab.api.models.commits.GitlabCommitDiff2;
-import com.synaptix.gitlab.api.models.commits.GitlabCommitStatus2;
+import com.synaptix.gitlab.api.models.commits.GitLabCommit;
+import com.synaptix.gitlab.api.models.commits.GitLabCommitComments;
+import com.synaptix.gitlab.api.models.commits.GitLabCommitDiff;
+import com.synaptix.gitlab.api.models.commits.GitLabCommitStatus;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -36,9 +36,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public List<GitlabCommit2> getAllCommits(Serializable projectId) throws IOException {
+    public List<GitLabCommit> getAllCommits(Serializable projectId) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits", gitLabAPI.sanitizeProjectId(projectId));
-        return gitLabAPI.retrieve().getAll(tailUrl, GitlabCommit2[].class);
+        return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommit[].class);
     }
 
     /**
@@ -53,9 +53,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public GitlabCommit2 getCommit(Serializable projectId, String commitHash) throws IOException {
+    public GitLabCommit getCommit(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        return gitLabAPI.retrieve().to(tailUrl, GitlabCommit2.class);
+        return gitLabAPI.retrieve().to(tailUrl, GitLabCommit.class);
     }
 
     /**
@@ -70,9 +70,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public List<GitlabCommitDiff2> getCommitDiffs(Serializable projectId, String commitHash) throws IOException {
+    public List<GitLabCommitDiff> getCommitDiffs(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/diff", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        GitlabCommitDiff2[] diffs = gitLabAPI.retrieve().to(tailUrl, GitlabCommitDiff2[].class);
+        GitLabCommitDiff[] diffs = gitLabAPI.retrieve().to(tailUrl, GitLabCommitDiff[].class);
         return Arrays.asList(diffs);
     }
 
@@ -88,9 +88,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public List<GitlabCommitComments2> getCommitComments(Serializable projectId, String commitHash) throws IOException {
+    public List<GitLabCommitComments> getCommitComments(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        GitlabCommitComments2[] diffs = gitLabAPI.retrieve().to(tailUrl, GitlabCommitComments2[].class);
+        GitLabCommitComments[] diffs = gitLabAPI.retrieve().to(tailUrl, GitLabCommitComments[].class);
         return Arrays.asList(diffs);
     }
 
@@ -110,9 +110,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public GitlabCommitComments2 postCommitComments(Serializable projectId, String commitHash, String note, String path, Integer line, String lineType) throws IOException {
+    public GitLabCommitComments postCommitComments(Serializable projectId, String commitHash, String note, String path, Integer line, String lineType) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        return gitLabAPI.dispatch().with("note", note).with("path", path).with("line", line).with("line_type", lineType).to(tailUrl, GitlabCommitComments2.class);
+        return gitLabAPI.dispatch().with("note", note).with("path", path).with("line", line).with("line_type", lineType).to(tailUrl, GitLabCommitComments.class);
     }
 
     /**
@@ -127,9 +127,9 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public List<GitlabCommitStatus2> getCommitStatuses(Serializable projectId, String commitHash) throws IOException {
+    public List<GitLabCommitStatus> getCommitStatuses(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/statuses", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        GitlabCommitStatus2[] statuses = gitLabAPI.retrieve().to(tailUrl, GitlabCommitStatus2[].class);
+        GitLabCommitStatus[] statuses = gitLabAPI.retrieve().to(tailUrl, GitLabCommitStatus[].class);
         return Arrays.asList(statuses);
     }
 
@@ -150,8 +150,8 @@ public class GitLabAPICommits {
      * @return
      * @throws IOException
      */
-    public GitlabCommitStatus2 postCommitStatus(Serializable projectId, String commitHash, String state, String ref, String name, String targetUrl, String description) throws IOException {
+    public GitLabCommitStatus postCommitStatus(Serializable projectId, String commitHash, String state, String ref, String name, String targetUrl, String description) throws IOException {
         String tailUrl = String.format("/projects/%s/statuses/%s", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        return gitLabAPI.dispatch().with("state", state).with("ref", ref).with("name", name).with("target_url", targetUrl).with("description", description).to(tailUrl, GitlabCommitStatus2.class);
+        return gitLabAPI.dispatch().with("state", state).with("ref", ref).with("name", name).with("target_url", targetUrl).with("description", description).to(tailUrl, GitLabCommitStatus.class);
     }
 }

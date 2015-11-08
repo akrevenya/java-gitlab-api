@@ -5,7 +5,7 @@ import com.synaptix.gitlab.api.models.GitlabUser;
 
 import java.util.Date;
 
-public class GitlabCommitStatus2 {
+public class GitLabCommitStatus {
 
     private String id;
     private String sha;
@@ -121,7 +121,7 @@ public class GitlabCommitStatus2 {
         // this prevents us from having to do clever workarounds for
         // https://gitlab.com/gitlab-org/gitlab-ce/issues/759
         try {
-            GitlabCommitStatus2 commitObj = (GitlabCommitStatus2) obj;
+            GitLabCommitStatus commitObj = (GitLabCommitStatus) obj;
             return (this.getId().compareTo(commitObj.getId()) == 0);
         } catch (ClassCastException e) {
             return false;

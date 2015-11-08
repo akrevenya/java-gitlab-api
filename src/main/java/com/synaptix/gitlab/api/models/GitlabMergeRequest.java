@@ -1,7 +1,7 @@
 package com.synaptix.gitlab.api.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.synaptix.gitlab.api.models.commits.GitlabCommitDiff2;
+import com.synaptix.gitlab.api.models.commits.GitLabCommitDiff;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +21,7 @@ public class GitlabMergeRequest {
     private GitlabMilestone milestone;
 
     private String[] labels;
-    private List<GitlabCommitDiff2> changes;
+    private List<GitLabCommitDiff> changes;
 
     private int upvotes;
     private int downvotes;
@@ -228,11 +228,11 @@ public class GitlabMergeRequest {
         this.createdAt = createdAt;
     }
 
-    public List<GitlabCommitDiff2> getChanges() {
+    public List<GitLabCommitDiff> getChanges() {
         return changes;
     }
 
-    public void setChanges(List<GitlabCommitDiff2> changes) {
+    public void setChanges(List<GitLabCommitDiff> changes) {
         this.changes = changes;
     }
 }

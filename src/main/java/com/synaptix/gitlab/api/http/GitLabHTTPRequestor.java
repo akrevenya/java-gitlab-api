@@ -4,7 +4,7 @@ import com.synaptix.gitlab.api.AuthMethod;
 import com.synaptix.gitlab.api.GitLabAPI;
 import com.synaptix.gitlab.api.GitlabAPIException;
 import com.synaptix.gitlab.api.TokenType;
-import com.synaptix.gitlab.api.models.commits.GitlabCommit2;
+import com.synaptix.gitlab.api.models.commits.GitLabCommit;
 import org.apache.commons.io.IOUtils;
 
 import javax.net.ssl.*;
@@ -255,7 +255,7 @@ public class GitLabHTTPRequestor {
                     Integer page = Integer.parseInt(matcher.group(2)) + 1;
                     this.url = new URL(matcher.replaceAll(matcher.group(1) + "page=" + page));
                 } else {
-                    if (GitlabCommit2[].class == type) {
+                    if (GitLabCommit[].class == type) {
                         // there is a bug in the Gitlab CE API
                         // (https://gitlab.com/gitlab-org/gitlab-ce/issues/759)
                         // that starts pagination with page=0 for commits

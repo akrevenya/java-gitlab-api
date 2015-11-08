@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.List;
 
-public class GitlabCommit2 {
+public class GitLabCommit {
 
     private String id;
     private String title;
@@ -102,7 +102,7 @@ public class GitlabCommit2 {
         // this prevents us from having to do clever workarounds for
         // https://gitlab.com/gitlab-org/gitlab-ce/issues/759
         try {
-            GitlabCommit2 commitObj = (GitlabCommit2) obj;
+            GitLabCommit commitObj = (GitLabCommit) obj;
             return (this.getId().compareTo(commitObj.getId()) == 0);
         } catch (ClassCastException e) {
             return false;

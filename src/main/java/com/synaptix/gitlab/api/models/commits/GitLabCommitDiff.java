@@ -2,7 +2,7 @@ package com.synaptix.gitlab.api.models.commits;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class GitlabCommitDiff2 {
+public class GitLabCommitDiff {
 
     @JsonProperty("diff")
     private String diff;
