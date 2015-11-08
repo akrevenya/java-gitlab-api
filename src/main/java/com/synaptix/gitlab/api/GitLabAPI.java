@@ -21,7 +21,7 @@ import java.util.List;
  *
  * @author &#064;timols (Tim O)
  */
-public class GitLabAPI2 {
+public class GitLabAPI {
 
     public static final ObjectMapper MAPPER = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
@@ -34,26 +34,26 @@ public class GitLabAPI2 {
     private AuthMethod authMethod;
     private boolean ignoreCertificateErrors = false;
 
-    private GitLabAPI2(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
+    private GitLabAPI(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
         this.hostUrl = hostUrl.endsWith("/") ? hostUrl.replaceAll("/$", "") : hostUrl;
         this.apiToken = apiToken;
         this.tokenType = tokenType;
         this.authMethod = method;
     }
 
-    public static GitLabAPI2 connect(String hostUrl, String apiToken) {
-        return new GitLabAPI2(hostUrl, apiToken, TokenType.PRIVATE_TOKEN, AuthMethod.HEADER);
+    public static GitLabAPI connect(String hostUrl, String apiToken) {
+        return new GitLabAPI(hostUrl, apiToken, TokenType.PRIVATE_TOKEN, AuthMethod.HEADER);
     }
 
-    public static GitLabAPI2 connect(String hostUrl, String apiToken, TokenType tokenType) {
-        return new GitLabAPI2(hostUrl, apiToken, tokenType, AuthMethod.HEADER);
+    public static GitLabAPI connect(String hostUrl, String apiToken, TokenType tokenType) {
+        return new GitLabAPI(hostUrl, apiToken, tokenType, AuthMethod.HEADER);
     }
 
-    public static GitLabAPI2 connect(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
-        return new GitLabAPI2(hostUrl, apiToken, tokenType, method);
+    public static GitLabAPI connect(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
+        return new GitLabAPI(hostUrl, apiToken, tokenType, method);
     }
 
-    public GitLabAPI2 ignoreCertificateErrors(boolean ignoreCertificateErrors) {
+    public GitLabAPI ignoreCertificateErrors(boolean ignoreCertificateErrors) {
         this.ignoreCertificateErrors = ignoreCertificateErrors;
         return this;
     }

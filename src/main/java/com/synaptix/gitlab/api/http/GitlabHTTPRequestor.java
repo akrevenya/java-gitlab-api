@@ -1,7 +1,7 @@
 package com.synaptix.gitlab.api.http;
 
 import com.synaptix.gitlab.api.AuthMethod;
-import com.synaptix.gitlab.api.GitLabAPI2;
+import com.synaptix.gitlab.api.GitLabAPI;
 import com.synaptix.gitlab.api.GitlabAPIException;
 import com.synaptix.gitlab.api.TokenType;
 import com.synaptix.gitlab.api.models.GitlabCommit;
@@ -32,7 +32,7 @@ public class GitlabHTTPRequestor {
 
     private static final Pattern PAGE_PATTERN = Pattern.compile("([&|?])page=(\\d+)");
 
-    private final GitLabAPI2 root;
+    private final GitLabAPI root;
 
     private String method = "GET"; // Default to GET requests
     private Map<String, Object> data = new HashMap<String, Object>();
@@ -59,7 +59,7 @@ public class GitlabHTTPRequestor {
         }
     }
 
-    public GitlabHTTPRequestor(GitLabAPI2 root) {
+    public GitlabHTTPRequestor(GitLabAPI root) {
         this.root = root;
     }
 
@@ -273,7 +273,7 @@ public class GitlabHTTPRequestor {
     private void submitData(HttpURLConnection connection) throws IOException {
         connection.setDoOutput(true);
         connection.setRequestProperty("Content-Type", "application/json");
-        GitLabAPI2.MAPPER.writeValue(connection.getOutputStream(), data);
+        GitLabAPI.MAPPER.writeValue(connection.getOutputStream(), data);
     }
 
     private boolean hasOutput() {
@@ -322,9 +322,9 @@ public class GitlabHTTPRequestor {
             }
             String data = IOUtils.toString(reader);
             if (type != null) {
-                return GitLabAPI2.MAPPER.readValue(data, type);
+                return GitLabAPI.MAPPER.readValue(data, type);
             } else if (instance != null) {
-                return GitLabAPI2.MAPPER.readerForUpdating(instance).readValue(data);
+                return GitLabAPI.MAPPER.readerForUpdating(instance).readValue(data);
             } else {
                 return null;
             }
