@@ -1,11 +1,14 @@
-package com.synaptix.gitlab.api.models;
+package com.synaptix.gitlab.api.models.projects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.synaptix.gitlab.api.models.GitlabNamespace;
+import com.synaptix.gitlab.api.models.GitlabPermission;
+import com.synaptix.gitlab.api.models.GitlabUser;
 
 import java.util.Date;
 import java.util.List;
 
-public class GitlabProject {
+public class GitLabProject2 {
 
     private Integer id;
     private String name;

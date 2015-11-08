@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synaptix.gitlab.api.http.GitLabHTTPRequestor;
 import com.synaptix.gitlab.api.services.GitLabAPICommits;
+import com.synaptix.gitlab.api.services.GitLabAPIProjects;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -28,6 +29,7 @@ public class GitLabAPI {
     private final AuthMethod authMethod;
 
     private final GitLabAPICommits gitLabAPICommits;
+    private final GitLabAPIProjects gitLabAPIProjects;
 
     private boolean ignoreCertificateErrors = false;
 
@@ -38,6 +40,7 @@ public class GitLabAPI {
         this.authMethod = method;
 
         this.gitLabAPICommits = new GitLabAPICommits(this);
+        this.gitLabAPIProjects = new GitLabAPIProjects(this);
     }
 
     public static GitLabAPI connect(String hostUrl, String apiToken) {
@@ -98,5 +101,9 @@ public class GitLabAPI {
 
     public GitLabAPICommits getGitLabAPICommits() {
         return gitLabAPICommits;
+    }
+
+    public GitLabAPIProjects getGitLabAPIProjects() {
+        return gitLabAPIProjects;
     }
 }

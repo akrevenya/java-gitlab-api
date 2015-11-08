@@ -90,8 +90,7 @@ public class GitLabAPICommits {
      */
     public List<GitLabCommitComments> getCommitComments(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        GitLabCommitComments[] diffs = gitLabAPI.retrieve().to(tailUrl, GitLabCommitComments[].class);
-        return Arrays.asList(diffs);
+        return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommitComments[].class);
     }
 
     /**
@@ -129,8 +128,7 @@ public class GitLabAPICommits {
      */
     public List<GitLabCommitStatus> getCommitStatuses(Serializable projectId, String commitHash) throws IOException {
         String tailUrl = String.format("/projects/%s/repository/commits/%s/statuses", gitLabAPI.sanitizeProjectId(projectId), commitHash);
-        GitLabCommitStatus[] statuses = gitLabAPI.retrieve().to(tailUrl, GitLabCommitStatus[].class);
-        return Arrays.asList(statuses);
+        return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommitStatus[].class);
     }
 
     /**
