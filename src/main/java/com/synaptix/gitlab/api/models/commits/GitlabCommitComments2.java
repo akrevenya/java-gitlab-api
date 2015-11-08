@@ -3,7 +3,7 @@ package com.synaptix.gitlab.api.models.commits;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.synaptix.gitlab.api.models.GitlabUser;
 
-public class GitLabCommitComments {
+public class GitlabCommitComments2 {
 
     private GitlabUser author;
     private String path;

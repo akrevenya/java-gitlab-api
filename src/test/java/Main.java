@@ -1,5 +1,5 @@
 import com.synaptix.gitlab.api.GitLabAPI;
-import com.synaptix.gitlab.api.models.commits.GitLabCommitDiff;
+import com.synaptix.gitlab.api.models.commits.GitlabCommitDiff2;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Main {
         //gitlabAPI.getGitLabAPICommits().createCommitStatus(49,"8056d2dc42680efe887367f163e851570493b8b8","failed",null,"qa/sonarqube",null,"Quality gate fail");
 
         // Commit Diff
-        List<GitLabCommitDiff> diffs = gitLabAPI.getGitLabAPICommits().getCommitDiffs(49, "8056d2dc42680efe887367f163e851570493b8b8");
+        List<GitlabCommitDiff2> diffs = gitLabAPI.getGitLabAPICommits().getCommitDiffs(49, "8056d2dc42680efe887367f163e851570493b8b8");
         diffs.stream().map(diff -> diff.getDiff()).forEach(System.out::println);
     }
 }
