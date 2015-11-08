@@ -2,19 +2,14 @@ package com.synaptix.gitlab.api;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.synaptix.gitlab.api.http.GitlabHTTPRequestor;
-import com.synaptix.gitlab.api.models.GitlabCommitComments;
-import com.synaptix.gitlab.api.models.GitlabCommitDiff;
-import com.synaptix.gitlab.api.models.GitlabCommitStatus;
-import com.synaptix.gitlab.api.models.GitlabProject;
+import com.synaptix.gitlab.api.http.GitLab2HTTPRequestor;
+import com.synaptix.gitlab.api.services.GitLabAPICommits;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Gitlab API Wrapper class
@@ -28,10 +23,12 @@ public class GitLabAPI {
     private static final String API_NAMESPACE = "/api/v3";
 
     private final String hostUrl;
-
     private final String apiToken;
     private final TokenType tokenType;
-    private AuthMethod authMethod;
+    private final AuthMethod authMethod;
+
+    private final GitLabAPICommits gitLabAPICommits;
+
     private boolean ignoreCertificateErrors = false;
 
     private GitLabAPI(String hostUrl, String apiToken, TokenType tokenType, AuthMethod method) {
@@ -39,6 +36,8 @@ public class GitLabAPI {
         this.apiToken = apiToken;
         this.tokenType = tokenType;
         this.authMethod = method;
+
+        this.gitLabAPICommits = new GitLabAPICommits(this);
     }
 
     public static GitLabAPI connect(String hostUrl, String apiToken) {
@@ -58,12 +57,12 @@ public class GitLabAPI {
         return this;
     }
 
-    public GitlabHTTPRequestor retrieve() {
-        return new GitlabHTTPRequestor(this).authenticate(apiToken, tokenType, authMethod);
+    public GitLab2HTTPRequestor retrieve() {
+        return new GitLab2HTTPRequestor(this).authenticate(apiToken, tokenType, authMethod);
     }
 
-    public GitlabHTTPRequestor dispatch() {
-        return new GitlabHTTPRequestor(this).authenticate(apiToken, tokenType, authMethod).method("POST");
+    public GitLab2HTTPRequestor dispatch() {
+        return new GitLab2HTTPRequestor(this).authenticate(apiToken, tokenType, authMethod).method("POST");
     }
 
     public boolean isIgnoreCertificateErrors() {
@@ -85,65 +84,7 @@ public class GitLabAPI {
         return new URL(hostUrl + tailAPIUrl);
     }
 
-    // List commit diffs for a project ID and commit hash
-    // GET /projects/:id/repository/commits/:sha/diff
-
-    /**
-     * Get the diff of a commit
-     * <p>
-     * GET /projects/:id/repository/commits/:sha/diff
-     *
-     * @param projectId  (required) - The ID of a project
-     * @param commitHash (required) - The commit SHA
-     * @return
-     * @throws IOException
-     */
-    public List<GitlabCommitDiff> getCommitDiffs(Serializable projectId, String commitHash) throws IOException {
-        String tailUrl = GitlabProject.URL + "/" + sanitizeProjectId(projectId) + "/repository/commits/" + commitHash + GitlabCommitDiff.URL;
-        GitlabCommitDiff[] diffs = retrieve().to(tailUrl, GitlabCommitDiff[].class);
-        return Arrays.asList(diffs);
-    }
-
-    /**
-     * Post comment to commit
-     * <p>
-     * POST /projects/:id/repository/commits/:sha/comments
-     *
-     * @param projectId  (required) - The ID of a project
-     * @param commitHash (required) - The commit SHA
-     * @param note       (required) - Text of comment
-     * @param path       (optional) - The file path
-     * @param line       (optional) - The line number
-     * @param lineType   (optional) - The line type (new or old)
-     * @return
-     * @throws IOException
-     */
-    public GitlabCommitComments createCommitComments(Serializable projectId, String commitHash, String note, String path, Integer line, String lineType) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", sanitizeProjectId(projectId), commitHash);
-        return dispatch().with("note", note).with("path", path).with("line", line).with("line_type", lineType).to(tailUrl, GitlabCommitComments.class);
-    }
-
-    /**
-     * Post the status to commit
-     * <p>
-     * POST /projects/:id/statuses/:sha
-     *
-     * @param projectId   (required) - The ID of a project
-     * @param commitHash  (required) - The commit SHA
-     * @param state       (required) - The state of the status. Can be: pending, running, success, failed, canceled
-     * @param ref         (optional) - The ref (branch or tag) to which the status refers
-     * @param name        (optional) - The label to differentiate this status from the status of other systems. Default: "default"
-     * @param targetUrl   (optional) - The target URL to associate with this status
-     * @param description (optional) - The short description of the status
-     * @return
-     * @throws IOException
-     */
-    public GitlabCommitStatus createCommitStatus(Serializable projectId, String commitHash, String state, String ref, String name, String targetUrl, String description) throws IOException {
-        String tailUrl = String.format("/projects/%s/statuses/%s", sanitizeProjectId(projectId), commitHash);
-        return dispatch().with("state", state).with("ref", ref).with("name", name).with("target_url", targetUrl).with("description", description).to(tailUrl, GitlabCommitStatus.class);
-    }
-
-    private String sanitizeProjectId(Serializable projectId) {
+    public String sanitizeProjectId(Serializable projectId) {
         if (!(projectId instanceof String) && !(projectId instanceof Integer)) {
             throw new IllegalArgumentException();
         }
@@ -153,5 +94,9 @@ public class GitLabAPI {
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException((e));
         }
+    }
+
+    public GitLabAPICommits getGitLabAPICommits() {
+        return gitLabAPICommits;
     }
 }

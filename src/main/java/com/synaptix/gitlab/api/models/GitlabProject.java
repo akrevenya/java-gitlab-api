@@ -7,8 +7,6 @@ import java.util.List;
 
 public class GitlabProject {
 
-    public static final String URL = "/projects";
-
     private Integer id;
     private String name;
 

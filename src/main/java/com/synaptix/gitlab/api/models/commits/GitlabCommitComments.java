@@ -1,8 +1,9 @@
-package com.synaptix.gitlab.api.models;
+package com.synaptix.gitlab.api.models.commits;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.synaptix.gitlab.api.models.GitlabUser;
 
-public class GitlabCommitComments {
+public class GitLabCommitComments {
 
     public final static String URL = "/comments";
 

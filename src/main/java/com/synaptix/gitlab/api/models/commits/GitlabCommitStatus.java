@@ -1,10 +1,11 @@
-package com.synaptix.gitlab.api.models;
+package com.synaptix.gitlab.api.models.commits;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.synaptix.gitlab.api.models.GitlabUser;
 
 import java.util.Date;
 
-public class GitlabCommitStatus {
+public class GitLabCommitStatus {
 
     public final static String URL = "/statuses";
 
@@ -122,7 +123,7 @@ public class GitlabCommitStatus {
         // this prevents us from having to do clever workarounds for
         // https://gitlab.com/gitlab-org/gitlab-ce/issues/759
         try {
-            GitlabCommitStatus commitObj = (GitlabCommitStatus) obj;
+            GitLabCommitStatus commitObj = (GitLabCommitStatus) obj;
             return (this.getId().compareTo(commitObj.getId()) == 0);
         } catch (ClassCastException e) {
             return false;

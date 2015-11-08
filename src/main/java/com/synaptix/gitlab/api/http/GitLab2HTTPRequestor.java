@@ -4,7 +4,7 @@ import com.synaptix.gitlab.api.AuthMethod;
 import com.synaptix.gitlab.api.GitLabAPI;
 import com.synaptix.gitlab.api.GitlabAPIException;
 import com.synaptix.gitlab.api.TokenType;
-import com.synaptix.gitlab.api.models.GitlabCommit;
+import com.synaptix.gitlab.api.models.commits.GitLabCommit;
 import org.apache.commons.io.IOUtils;
 
 import javax.net.ssl.*;
@@ -28,7 +28,7 @@ import java.util.zip.GZIPInputStream;
  *
  * @author &#064;timols (Tim O)
  */
-public class GitlabHTTPRequestor {
+public class GitLab2HTTPRequestor {
 
     private static final Pattern PAGE_PATTERN = Pattern.compile("([&|?])page=(\\d+)");
 
@@ -59,7 +59,7 @@ public class GitlabHTTPRequestor {
         }
     }
 
-    public GitlabHTTPRequestor(GitLabAPI root) {
+    public GitLab2HTTPRequestor(GitLabAPI root) {
         this.root = root;
     }
 
@@ -72,7 +72,7 @@ public class GitlabHTTPRequestor {
      * @param method The authentication method
      * @return this
      */
-    public GitlabHTTPRequestor authenticate(String token, TokenType type, AuthMethod method) {
+    public GitLab2HTTPRequestor authenticate(String token, TokenType type, AuthMethod method) {
         this.apiToken = token;
         this.tokenType = type;
         this.authMethod = method;
@@ -86,7 +86,7 @@ public class GitlabHTTPRequestor {
      * @param method The HTTP method
      * @return this
      */
-    public GitlabHTTPRequestor method(String method) {
+    public GitLab2HTTPRequestor method(String method) {
         try {
             this.method = METHOD.valueOf(method).toString();
         } catch (IllegalArgumentException e) {
@@ -104,7 +104,7 @@ public class GitlabHTTPRequestor {
      * @param value Form parameter Value
      * @return this
      */
-    public GitlabHTTPRequestor with(String key, Object value) {
+    public GitLab2HTTPRequestor with(String key, Object value) {
         if (value != null && key != null) {
             data.put(key, value);
         }
@@ -255,7 +255,7 @@ public class GitlabHTTPRequestor {
                     Integer page = Integer.parseInt(matcher.group(2)) + 1;
                     this.url = new URL(matcher.replaceAll(matcher.group(1) + "page=" + page));
                 } else {
-                    if (GitlabCommit[].class == type) {
+                    if (GitLabCommit[].class == type) {
                         // there is a bug in the Gitlab CE API
                         // (https://gitlab.com/gitlab-org/gitlab-ce/issues/759)
                         // that starts pagination with page=0 for commits
@@ -329,7 +329,7 @@ public class GitlabHTTPRequestor {
                 return null;
             }
         } catch (SSLHandshakeException e) {
-            throw new SSLHandshakeException("You can disable certificate checking by setting ignoreCertificateErrors on GitlabHTTPRequestor. SSL Error: " + e.getMessage());
+            throw new SSLHandshakeException("You can disable certificate checking by setting ignoreCertificateErrors on GitLab2HTTPRequestor. SSL Error: " + e.getMessage());
         } finally {
             IOUtils.closeQuietly(reader);
         }
