@@ -7,8 +7,6 @@ import java.util.Date;
 
 public class GitLabCommitStatus {
 
-    public final static String URL = "/statuses";
-
     private String id;
     private String sha;
     private String ref;

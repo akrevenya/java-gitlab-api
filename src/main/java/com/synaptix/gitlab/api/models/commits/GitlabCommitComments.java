@@ -5,8 +5,6 @@ import com.synaptix.gitlab.api.models.GitlabUser;
 
 public class GitLabCommitComments {
 
-    public final static String URL = "/comments";
-
     private GitlabUser author;
     private String path;
     private String note;
