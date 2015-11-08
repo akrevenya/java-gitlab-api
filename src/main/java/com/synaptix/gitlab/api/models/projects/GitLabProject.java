@@ -8,7 +8,7 @@ import com.synaptix.gitlab.api.models.GitlabUser;
 import java.util.Date;
 import java.util.List;
 
-public class GitLabProject2 {
+public class GitLabProject {
 
     private Integer id;
     private String name;

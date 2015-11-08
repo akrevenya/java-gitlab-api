@@ -1,7 +1,7 @@
 package com.synaptix.gitlab.api.services;
 
 import com.synaptix.gitlab.api.GitLabAPI;
-import com.synaptix.gitlab.api.models.projects.GitLabProject2;
+import com.synaptix.gitlab.api.models.projects.GitLabProject;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,8 +31,8 @@ public class GitLabAPIProjects {
      * @return
      * @throws IOException
      */
-    public GitLabProject2 getProject(Serializable projectId) throws IOException {
+    public GitLabProject getProject(Serializable projectId) throws IOException {
         String tailUrl = String.format("/projects/%s", gitLabAPI.sanitizeProjectId(projectId));
-        return gitLabAPI.retrieve().to(tailUrl, GitLabProject2.class);
+        return gitLabAPI.retrieve().to(tailUrl, GitLabProject.class);
     }
 }
