@@ -37,7 +37,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public List<GitLabCommit> getAllCommits(Serializable projectId) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits", gitLabAPI.sanitizeProjectId(projectId));
+        String tailUrl = String.format("/projects/%s/repository/commits", gitLabAPI.sanitize(projectId));
         return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommit[].class);
     }
 
@@ -54,7 +54,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public GitLabCommit getCommit(Serializable projectId, String commitHash) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/repository/commits/%s", gitLabAPI.sanitize(projectId), commitHash);
         return gitLabAPI.retrieve().to(tailUrl, GitLabCommit.class);
     }
 
@@ -71,7 +71,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public List<GitLabCommitDiff> getCommitDiffs(Serializable projectId, String commitHash) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s/diff", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/repository/commits/%s/diff", gitLabAPI.sanitize(projectId), commitHash);
         GitLabCommitDiff[] diffs = gitLabAPI.retrieve().to(tailUrl, GitLabCommitDiff[].class);
         return Arrays.asList(diffs);
     }
@@ -89,7 +89,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public List<GitLabCommitComments> getCommitComments(Serializable projectId, String commitHash) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitize(projectId), commitHash);
         return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommitComments[].class);
     }
 
@@ -110,7 +110,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public GitLabCommitComments postCommitComments(Serializable projectId, String commitHash, String note, String path, Integer line, String lineType) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/repository/commits/%s/comments", gitLabAPI.sanitize(projectId), commitHash);
         return gitLabAPI.dispatch().with("note", note).with("path", path).with("line", line).with("line_type", lineType).to(tailUrl, GitLabCommitComments.class);
     }
 
@@ -127,7 +127,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public List<GitLabCommitStatus> getCommitStatuses(Serializable projectId, String commitHash) throws IOException {
-        String tailUrl = String.format("/projects/%s/repository/commits/%s/statuses", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/repository/commits/%s/statuses", gitLabAPI.sanitize(projectId), commitHash);
         return gitLabAPI.retrieve().getAll(tailUrl, GitLabCommitStatus[].class);
     }
 
@@ -149,7 +149,7 @@ public class GitLabAPICommits {
      * @throws IOException
      */
     public GitLabCommitStatus postCommitStatus(Serializable projectId, String commitHash, String state, String ref, String name, String targetUrl, String description) throws IOException {
-        String tailUrl = String.format("/projects/%s/statuses/%s", gitLabAPI.sanitizeProjectId(projectId), commitHash);
+        String tailUrl = String.format("/projects/%s/statuses/%s", gitLabAPI.sanitize(projectId), commitHash);
         return gitLabAPI.dispatch().with("state", state).with("ref", ref).with("name", name).with("target_url", targetUrl).with("description", description).to(tailUrl, GitLabCommitStatus.class);
     }
 }

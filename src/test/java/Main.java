@@ -37,7 +37,7 @@ public class Main {
         });*/
 
         // Project
-        System.out.println(gitLabAPI.getGitLabAPIProjects().getProject(49));
+        gitLabAPI.getGitLabAPIProjects().getProjectsSearchByName("task-manager", null, null, null, null).stream().map(project -> project.getWebUrl()).forEach(System.out::println);
     }
 
     private static void processPatch(Map<Integer, Integer> patchLocationMapping, String patch) throws IOException {

@@ -7,10 +7,11 @@ import com.synaptix.gitlab.api.services.GitLabAPICommits;
 import com.synaptix.gitlab.api.services.GitLabAPIProjects;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Gitlab API Wrapper class
@@ -87,13 +88,12 @@ public class GitLabAPI {
         return new URL(hostUrl + tailAPIUrl);
     }
 
-    public String sanitizeProjectId(Serializable projectId) {
-        if (!(projectId instanceof String) && !(projectId instanceof Integer)) {
-            throw new IllegalArgumentException();
+    public String sanitize(Object value) {
+        if (value == null) {
+            return null;
         }
-
         try {
-            return URLEncoder.encode(String.valueOf(projectId), "UTF-8");
+            return URLEncoder.encode(String.valueOf(value), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException((e));
         }
@@ -105,5 +105,35 @@ public class GitLabAPI {
 
     public GitLabAPIProjects getGitLabAPIProjects() {
         return gitLabAPIProjects;
+    }
+
+    public ParameterBuilder parameters() {
+        return new ParameterBuilder(this);
+    }
+
+    public static class ParameterBuilder {
+
+        private final GitLabAPI gitLabAPI;
+
+        private List<String> fields;
+
+        ParameterBuilder(GitLabAPI gitLabAPI) {
+            super();
+
+            this.gitLabAPI = gitLabAPI;
+
+            this.fields = new ArrayList<>();
+        }
+
+        public ParameterBuilder with(String name, Object value) {
+            if (value != null) {
+                this.fields.add(name + "=" + gitLabAPI.sanitize(value));
+            }
+            return this;
+        }
+
+        public String build() {
+            return String.join("&", fields);
+        }
     }
 }
