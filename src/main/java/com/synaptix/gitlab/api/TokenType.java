@@ -2,7 +2,7 @@ package com.synaptix.gitlab.api;
 
 public enum TokenType {
     PRIVATE_TOKEN("private_token", "PRIVATE-TOKEN", "%s"),
-    ACCESS_TOKEN("access_token", "Authorization", "Bearer %s");
+    ACCESS_TOKEN("access_token", "Authorization", "Basic %s");
 
     private final String tokenParamName;
     private final String tokenHeaderName;
