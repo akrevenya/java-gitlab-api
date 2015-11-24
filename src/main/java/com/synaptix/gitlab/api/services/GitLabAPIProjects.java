@@ -80,8 +80,8 @@ public class GitLabAPIProjects {
     }
 
     private List<GitLabProject> getProjects(String prefix, Boolean archived, String orderBy, String sort, String search, Boolean ciEnabledFirst) throws IOException {
-        String parameters = new Query().appendIf("archived", archived).appendIf("order_by", orderBy).appendIf("sort", sort).appendIf("search", gitLabAPI.sanitize(search))
-                .appendIf("ciEnabledFirst", ciEnabledFirst).toString();
+        String parameters = Query.newQuery().appendIf("archived", archived).appendIf("order_by", orderBy).appendIf("sort", sort).appendIf("search", gitLabAPI.sanitize(search))
+                .appendIf("ciEnabledFirst", ciEnabledFirst).build();
 
         String tailUrl = "/projects";
         if (prefix != null) {
@@ -123,7 +123,7 @@ public class GitLabAPIProjects {
      * @throws IOException
      */
     public List<GitLabProject> getProjectsSearchByName(String query, Integer perPage, Integer page, String orderBy, String sort) throws IOException {
-        String parameters = new Query().appendIf("per_page", perPage).appendIf("page", page).appendIf("orderBy", orderBy).appendIf("sort", sort).toString();
+        String parameters = Query.newQuery().appendIf("per_page", perPage).appendIf("page", page).appendIf("orderBy", orderBy).appendIf("sort", sort).build();
         String tailUrl = String.format("/projects/search/%s%s", gitLabAPI.sanitize(query), parameters);
         return gitLabAPI.retrieve().getAll(tailUrl, GitLabProject[].class);
     }

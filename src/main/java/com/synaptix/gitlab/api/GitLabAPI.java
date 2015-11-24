@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Gitlab API Wrapper class
@@ -107,33 +105,4 @@ public class GitLabAPI {
         return gitLabAPIProjects;
     }
 
-    public ParameterBuilder parameters() {
-        return new ParameterBuilder(this);
-    }
-
-    public static class ParameterBuilder {
-
-        private final GitLabAPI gitLabAPI;
-
-        private List<String> fields;
-
-        ParameterBuilder(GitLabAPI gitLabAPI) {
-            super();
-
-            this.gitLabAPI = gitLabAPI;
-
-            this.fields = new ArrayList<>();
-        }
-
-        public ParameterBuilder with(String name, Object value) {
-            if (value != null) {
-                this.fields.add(name + "=" + gitLabAPI.sanitize(value));
-            }
-            return this;
-        }
-
-        public String build() {
-            return String.join("&", fields);
-        }
-    }
 }

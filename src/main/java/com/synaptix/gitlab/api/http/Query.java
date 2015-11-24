@@ -23,6 +23,14 @@ public class Query {
         }
     }
 
+    public static final Query newQuery() {
+        return new Query();
+    }
+
+    private Query() {
+        super();
+    }
+
     /**
      * The type of params is:
      * Tuple<name, Tuple<value, URLEncoder.encode(value, "UTF-8")>>
@@ -110,8 +118,7 @@ public class Query {
      * Returns a Query suitable for appending
      * to a URI
      */
-    @Override
-    public String toString() {
+    public String build() {
         final StringBuilder builder = new StringBuilder();
 
         for (final Tuple<String, Tuple<String, String>> param : params) {
