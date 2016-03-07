@@ -7,8 +7,8 @@
     <artifactId>java-gitlab-api</artifactId>
     <version>1.5.0-SNAPSHOT</version>
     <organization>
-        <name>Synaptix-Labs</name>
-        <url>http://www.synaptix-labs.com</url>
+        <name>Talanlabs</name>
+        <url>http://www.talanlabs.com</url>
     </organization>
     <properties>
         <target.jdk>1.8</target.jdk>
@@ -20,22 +20,22 @@
     </properties>
     <developers>
         <developer>
-            <id>gabriel.allaigre@synaptix-labs.com</id>
+            <id>gabriel.allaigre@talanlabs.com</id>
             <name>Gabriel Allaigre</name>
-            <email>gabriel.allaigre@synaptix-labs.com</email>
+            <email>gabriel.allaigre@talanlabs.com</email>
         </developer>
     </developers>
     <scm>
-        <url>https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api</url>
-        <connection>scm:git:https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api.git</connection>
+        <url>https://gitlab.talanlabs.com/gabriel.allaigre/java-gitlab-api</url>
+        <connection>scm:git:https://gitlab.talanlabs.com/gabriel.allaigre/java-gitlab-api.git</connection>
     </scm>
     <ciManagement>
         <system>gitlab-ci</system>
-        <url>https://gitlab.synaptix-labs.com/ci/projects/11</url>
+        <url>https://gitlab.talanlabs.com/ci/projects/11</url>
     </ciManagement>
     <issueManagement>
         <system>gitlab</system>
-        <url>https://gitlab.synaptix-labs.com/gabriel.allaigre/java-gitlab-api/issues</url>
+        <url>https://gitlab.talanlabs.com/gabriel.allaigre/java-gitlab-api/issues</url>
     </issueManagement>
     <build>
         <plugins>
@@ -92,12 +92,12 @@
     </dependencies>
     <distributionManagement>
         <repository>
-            <id>synaptix-releases-repository</id>
-            <url>http://nexus.synaptix-labs.com/content/repositories/releases/</url>
+            <id>talanlabs-releases-repository</id>
+            <url>http://nexus.talanlabs.com/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>synaptix-snapshots-repository</id>
-            <url>http://nexus.synaptix-labs.com/content/repositories/snapshots/</url>
+            <id>talanlabs-snapshots-repository</id>
+            <url>http://nexus.talanlabs.com/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
