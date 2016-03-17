@@ -30,7 +30,7 @@ public class GitLabAPIUsers {
      * @throws IOException
      */
     public GitlabUser getUser() throws IOException {
-        String tailUrl = String.format("/projects");
+        String tailUrl = String.format("/user");
         return gitLabAPI.retrieve().to(tailUrl, GitlabUser.class);
     }
 }
