@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.synaptix.gitlab.api.http.GitLabHTTPRequestor;
 import com.synaptix.gitlab.api.services.GitLabAPICommits;
 import com.synaptix.gitlab.api.services.GitLabAPIProjects;
+import com.synaptix.gitlab.api.services.GitLabAPIUsers;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -29,6 +30,7 @@ public class GitLabAPI {
 
     private final GitLabAPICommits gitLabAPICommits;
     private final GitLabAPIProjects gitLabAPIProjects;
+    private final GitLabAPIUsers gitLabAPIUsers;
 
     private boolean ignoreCertificateErrors = false;
 
@@ -40,6 +42,7 @@ public class GitLabAPI {
 
         this.gitLabAPICommits = new GitLabAPICommits(this);
         this.gitLabAPIProjects = new GitLabAPIProjects(this);
+        this.gitLabAPIUsers = new GitLabAPIUsers(this);
     }
 
     public static GitLabAPI connect(String hostUrl, String apiToken) {
@@ -105,4 +108,7 @@ public class GitLabAPI {
         return gitLabAPIProjects;
     }
 
+    public GitLabAPIUsers getGitLabAPIUsers() {
+        return gitLabAPIUsers;
+    }
 }
